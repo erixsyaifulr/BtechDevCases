@@ -4,82 +4,124 @@ Flutter Web client for the BTECH Wallet Application.
 
 This application connects to the BTECH Wallet Backend API and provides:
 
-- User Registration\
-- User Login\
-- View Total Balance\
-- Transfer Balance\
-- Transaction History
+-   User Registration\
+-   User Login\
+-   View Total Balance\
+-   Transfer Balance\
+-   Transaction History
 
----
+------------------------------------------------------------------------
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- Flutter\
-- Bloc / Cubit (State Management)\
-- Dio (HTTP Client)\
-- AutoRoute (Navigation)\
-- Freezed (Immutable Models & Union Types)\
-- Envied (Environment Variable Management)\
-- Clean Architecture
+-   Flutter\
+-   Bloc / Cubit (State Management)\
+-   Dio (HTTP Client)\
+-   AutoRoute (Navigation)\
+-   Freezed (Immutable Models & Union Types)\
+-   Envied (Environment Variable Management)\
+-   Clean & Modular Architecture
 
----
+------------------------------------------------------------------------
 
-## Requirements
+## 🌐 Backend Requirement
 
-### 1. Register
+⚠️ The backend must be running before starting the Flutter app.
 
-- Fields: `email`, `password`, `confirmPassword`
+Default backend URL:
 
-### 2. Login
+http://localhost:3000
 
-- Input: `email`, `password`
-- Return: **JWT**
-- Token should contain at least:
-  - `email`
-  - `user id` or similar identifier
+Make sure the backend is running (via Docker):
 
-### 3. Authenticated View / Endpoint
+docker compose up --build
 
-After successful login, calling the protected route / loading the protected screen should show:
+------------------------------------------------------------------------
 
-```
-Hello [email], welcome back
-```
+## 🚀 How To Run (Recommended: Flutter Web - Chrome)
 
-user should be logged out after 15 minutes of inacitvity
+### 1️⃣ Install Dependencies
 
----
+flutter pub get
 
-### 4. Manager wallet
+### 2️⃣ Setup Environment File
 
-User should be able to see and transfer his money to other user.
-fields are: recipient, amount, and notes
+The repository only includes:
 
-## What to deliver
+.env.example
 
-- Fork this repository and then send the link
-- A runnable project (any structure).
-- README explaining:
-  - How to build and run it (prepare docker compose)
-  - Required environment variables
+Create your own `.env` file by copying it:
 
----
+cp .env.example .env
 
-## Acceptance criteria
+Then update the value if needed:
 
-- Registration works with validation.
-- Login returns a usable JWT.
-- A protected route or screen shows the welcome message using JWT auth.
-- User able to transfer funds
-- Set it up so it can be ran on Docker container with compose for database
+API_BASE_URL=http://localhost:3000
 
----
+⚠️ The `.env` file should NOT be committed to Git.
 
-## Optional bonus
+After running code generation (see below), you may delete the `.env`
+file if required for security purposes.
 
-- Docker
-- Backend built using Go (or their frameworks)
-- Frontend built using Flutter/React Native
-- Tests (unit or integration)
+------------------------------------------------------------------------
 
-This keeps the scope tight: just registration, login, and a protected “Hello [email]” flow.
+### 3️⃣ Generate Code (Required for Freezed & Envied)
+
+flutter pub run build_runner build --delete-conflicting-outputs
+
+This step will generate:
+
+-   Freezed models
+-   Envied environment configuration
+
+After successful generation, you can remove the `.env` file if needed.
+
+------------------------------------------------------------------------
+
+### 4️⃣ Run on Chrome
+
+flutter run -d chrome
+
+------------------------------------------------------------------------
+
+## 🔧 Android Emulator Note
+
+If running on Android emulator:
+
+baseUrl: "http://10.0.2.2:3000"
+
+------------------------------------------------------------------------
+
+## 📁 Project Structure
+
+lib/ ├── core/ │ ├── network/ │ ├── utils/ │ └── widgets/ │ ├──
+features/ │ ├── auth/ │ ├── home/ │ └── transfer/ │ ├── routes/ └──
+main.dart
+
+------------------------------------------------------------------------
+
+## 🧪 Testing Flow
+
+1.  Register a new user\
+2.  Login\
+3.  View total balance\
+4.  Transfer balance\
+5.  Check transaction history
+
+------------------------------------------------------------------------
+
+## ⚠️ Important Notes
+
+-   Backend must be running before starting the app.\
+-   CORS must be enabled on the backend for web support.\
+-   Code generation is required (Freezed & Envied).\
+-   Only `.env.example` is committed to Git.\
+-   Recommended platform for assessment: **Flutter Web (Chrome)**.
+
+------------------------------------------------------------------------
+
+## ✅ Requirements
+
+-   Flutter SDK (latest stable recommended)\
+-   Google Chrome\
+-   Running Backend API
