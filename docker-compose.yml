@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: wallet_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: BtechWallet
+      POSTGRES_PASSWORD: BtechWallet1999
+      POSTGRES_DB: btech_wallet
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      args:
+        DATABASE_URL: postgresql://BtechWallet:BtechWallet1999@db:5432/btech_wallet
+    container_name: btech_wallet_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://BtechWallet:BtechWallet1999@db:5432/btech_wallet
+      JWT_SECRET: supersecret
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -1,0 +1,21 @@
+export const Messages = {
+  WELCOME_MESSAGE: "Btech Wallet API is running...",
+  ALL_FIELDS_REQUIRED: "All fields required",
+  PASSWORDS_DO_NOT_MATCH: "Passwords do not match",
+  PASSWORD_INVALID:
+    "Password must be at least 8 characters long, include uppercase, lowercase, number, and symbol",
+  USER_REGISTERED: "User registered",
+  USER_LOGIN_SUCCESS: "Login successful",
+  USER_NOT_FOUND: "User not found",
+  INVALID_CREDENTIALS: "Invalid email or password",
+  UNAUTHORIZED: "Unauthorized",
+  TOKEN_EXPIRED_OR_INVALID: "Token expired or invalid",
+  USER_ALREADY_EXISTS: "User already exists",
+  INSUFFICIENT_BALANCE: "Insufficient balance",
+  TRANSFER_SUCCESS: "Transfer successful",
+  INTERNAL_ERROR: "Internal Server Error",
+  CANNOT_TRANSFER_TO_YOURSELF: "Cannot transfer to yourself",
+  RECEIVER_NOT_FOUND: "Receiver not found",
+  SENDER_NOT_FOUND: "Sender not found",
+  AMOUNT_MUST_BE_GREATER_THAN_ZERO: "Amount must be greater than zero",
+};
