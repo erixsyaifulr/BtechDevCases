@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login } from "../controllers/auth.controller";
+import { login, register } from "../controllers/auth.controller";
 import { authMiddleware } from "../middleware/auth.middleware";
 
 const router = Router();
@@ -9,7 +9,7 @@ router.post("/login", login);
 
 router.get("/me", authMiddleware, (req: any, res) => {
   res.json({
-    message: `Hello ${req.user.email}, welcome back`
+    data: `Hello ${req.user.email}, welcome back`,
   });
 });
 
