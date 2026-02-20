@@ -1,67 +1,290 @@
-# Take-home Assignment: Auth with JWT (TypeScript)
+# BTECH Wallet App API
 
-Build a small application in **TypeScript/Go/C#** that supports user **registration** and **login** using **JWT**.
-You can choose any stack or structure you want.
-As long as the core flow works end-to-end, it’s accepted.
-Please note User will be using the app in place with very bad connections, like jungle or caves.
+Node.js + TypeScript + Prisma + PostgreSQL + Docker
 
 ---
 
-## Requirements
+## Overview
 
-### 1. Register
+BTECH Wallet App is a RESTful API that implements a simple digital
+wallet system.
 
-- Fields: `email`, `password`, `confirmPassword`
+Features include:
 
-### 2. Login
+- User Registration
+- User Login with JWT Authentication
+- Protected Routes
+- Wallet Balance Management
+- Secure Fund Transfer
+- Transaction History
+- Dockerized setup with PostgreSQL
 
-- Input: `email`, `password`
-- Return: **JWT**
-- Token should contain at least:
-  - `email`
-  - `user id` or similar identifier
+JWT tokens expire after **15 minutes** to enforce inactivity logout.
 
-### 3. Authenticated View / Endpoint
+---
 
-After successful login, calling the protected route / loading the protected screen should show:
+## Tech Stack
 
+- Node.js
+- TypeScript
+- Express
+- Prisma ORM
+- PostgreSQL
+- JWT (JSON Web Token)
+- bcrypt (Password hashing)
+- Docker & Docker Compose
+
+---
+
+## Architecture
+
+Project structure follows a layered architecture pattern:
+
+    src/
+     ├── controllers/
+     ├── services/
+     ├── repositories/
+     ├── middlewares/
+     ├── routes/
+     ├── utils/
+     └── app.ts
+
+Flow:
+
+Controller → Service → Repository → Prisma → Database
+
+---
+
+# Features
+
+---
+
+## 1. User Registration
+
+### Endpoint
+
+POST `/auth/register`
+
+### Request Body
+
+```json
+{
+  "email": "user@example.com",
+  "password": "Password123!",
+  "confirmPassword": "Password123!"
+}
 ```
-Hello [email], welcome back
+
+### Behavior
+
+- Validates email & password
+- Password is hashed using bcrypt
+- New user automatically receives:
+
+Initial balance: 100000
+
+---
+
+## 2. User Login
+
+### Endpoint
+
+POST `/auth/login`
+
+### Request Body
+
+```json
+{
+  "email": "user@example.com",
+  "password": "Password123!"
+}
 ```
 
-user should be logged out after 15 minutes of inacitvity
+### Response
+
+```json
+{
+  "token": "JWT_TOKEN"
+}
+```
+
+### JWT Details
+
+- Contains user id and email
+- Expires in 15 minutes (900 seconds)
 
 ---
 
-### 4. Manager wallet
+## 3. Get Authenticated User
 
-User should be able to see and transfer his money to other user.
-fields are: recipient, amount, and notes
+### Endpoint
 
-## What to deliver
+GET `/auth/me`
 
-- Fork this repository and then send the link
-- A runnable project (any structure).
-- README explaining:
-  - How to build and run it (prepare docker compose)
-  - Required environment variables
+### Header
 
----
+Authorization: Bearer `<token>`{=html}
 
-## Acceptance criteria
+### Response
 
-- Registration works with validation.
-- Login returns a usable JWT.
-- A protected route or screen shows the welcome message using JWT auth.
-- User able to transfer funds
+Hello user@example.com, welcome back
 
 ---
 
-## Optional bonus
+## 4. Check Wallet Balance
 
-- Docker
-- Backend built using Go (or their frameworks)
-- Frontend built using React/Vue (or their frameworks)
-- Tests (unit or integration)
+### Endpoint
 
-This keeps the scope tight: just registration, login, and a protected “Hello [email]” flow.
+GET `/transaction/balance`
+
+### Header
+
+Authorization: Bearer `<token>`{=html}
+
+---
+
+## 5. Transfer Money
+
+### Endpoint
+
+POST `/transaction/transfer`
+
+### Header
+
+Authorization: Bearer `<token>`{=html}
+
+### Request Body
+
+```json
+{
+  "recipient": "other@example.com",
+  "amount": 50000,
+  "notes": "Lunch payment"
+}
+```
+
+### Rules
+
+- Cannot transfer if insufficient balance
+- Cannot transfer to self
+- Transfer executed inside a database transaction
+- Both sender and recipient balances are updated atomically
+
+---
+
+## 6. Transaction History
+
+### Endpoint
+
+GET `/transaction/history`
+
+### Header
+
+Authorization: Bearer `<token>`{=html}
+
+Returns list of transfers (sent and received).
+
+---
+
+# Prerequisites
+
+Make sure you have installed:
+
+- Docker Desktop
+- Docker Compose
+- Git
+
+Verify installation:
+
+docker --version docker compose version
+
+---
+
+# Installation Guide (Docker)
+
+## 1. Clone Repository
+
+clone this repository, then cd btech-wallet-app
+
+## 2. Run Application
+
+docker compose up --build
+
+This will:
+
+- Build Node.js container
+- Start PostgreSQL container
+- Run Prisma migrations
+- Start API server
+
+## 3. Access Application
+
+Server runs at:
+
+http://localhost:3000
+
+---
+
+# Environment Variables
+
+Configured inside docker-compose.yml
+
+DATABASE_URL=postgresql://postgres:postgres@db:5432/walletdb\
+JWT_SECRET=supersecret
+
+If running without Docker, create a .env file:
+
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/walletdb\
+JWT_SECRET=supersecret
+
+---
+
+# Run Without Docker (Development Mode)
+
+1.  Install dependencies
+
+npm install
+
+2.  Setup environment variables in .env
+
+3.  Run Prisma migration
+
+npx prisma migrate dev
+
+4.  Start development server
+
+npm run dev
+
+---
+
+# Database
+
+- PostgreSQL 15
+- Prisma ORM
+- Prisma migrations used for schema management
+- Docker volume persists database data
+
+---
+
+# Security Notes
+
+- Passwords are hashed using bcrypt
+- JWT authentication with 15-minute expiration
+- Database transactions ensure safe balance updates
+- Input validation applied for all endpoints
+
+---
+
+# Acceptance Criteria Checklist
+
+- ✅ Registration works with validation\
+- ✅ Login returns a usable JWT\
+- ✅ JWT expires after 15 minutes\
+- ✅ Protected route returns welcome message\
+- ✅ User can transfer funds\
+- ✅ Transfer uses database transaction\
+- ✅ Dockerized setup with PostgreSQL\
+- ✅ Database migration works\
+- ✅ Clean layered architecture
+
+---
