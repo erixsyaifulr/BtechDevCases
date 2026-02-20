@@ -1,9 +1,26 @@
-# Take-home Assignment: Auth with JWT (TypeScript)
+# BTECH Wallet - Flutter App
 
-Build a small application in **TypeScript/Go/C#** that supports user **registration**, **login** using **JWT** and wallet management.
-You can choose any stack or structure you want.
-As long as the core flow works end-to-end, it’s accepted.
-Please note User will be using the app in place with very bad connections, like jungle or caves.
+Flutter Web client for the BTECH Wallet Application.
+
+This application connects to the BTECH Wallet Backend API and provides:
+
+- User Registration\
+- User Login\
+- View Total Balance\
+- Transfer Balance\
+- Transaction History
+
+---
+
+## Tech Stack
+
+- Flutter\
+- Bloc / Cubit (State Management)\
+- Dio (HTTP Client)\
+- AutoRoute (Navigation)\
+- Freezed (Immutable Models & Union Types)\
+- Envied (Environment Variable Management)\
+- Clean Architecture
 
 ---
 
