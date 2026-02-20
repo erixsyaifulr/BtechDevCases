@@ -4,22 +4,22 @@ Flutter Web client for the BTECH Wallet Application.
 
 This application connects to the BTECH Wallet Backend API and provides:
 
-- User Registration\
-- User Login\
-- View Total Balance\
-- Transfer Balance\
+- User Registration
+- User Login
+- View Total Balance
+- Transfer Balance
 - Transaction History
 
 ---
 
 ## Tech Stack
 
-- Flutter\
-- Bloc / Cubit (State Management)\
-- Dio (HTTP Client)\
-- AutoRoute (Navigation)\
-- Freezed (Immutable Models & Union Types)\
-- Envied (Environment Variable Management)\
+- Flutter
+- Bloc / Cubit (State Management)
+- Dio (HTTP Client)
+- AutoRoute (Navigation)
+- Freezed (Immutable Models & Union Types)
+- Envied (Environment Variable Management)
 - Clean & Modular Architecture
 
 ---
@@ -40,11 +40,11 @@ docker compose up --build
 
 ## How To Run (Recommended: Flutter Web - Chrome)
 
-### 1 Install Dependencies
+### 1. Install Dependencies
 
 flutter pub get
 
-### 2 Setup Environment File
+### 2. Setup Environment File
 
 The repository only includes:
 
@@ -65,7 +65,7 @@ file if required for security purposes.
 
 ---
 
-### 3 Generate Code (Required for Freezed & Envied)
+### 3. Generate Code (Required for Freezed & Envied)
 
 flutter pub run build_runner build --delete-conflicting-outputs
 
@@ -78,7 +78,7 @@ After successful generation, you can remove the `.env` file if needed.
 
 ---
 
-### 4 Run on Chrome
+### 4. Run on Chrome
 
 flutter run -d chrome
 
@@ -94,26 +94,26 @@ baseUrl: "http://10.0.2.2:3000"
 
 ## Testing Flow
 
-1.  Register a new user\
-2.  Login\
-3.  View total balance\
-4.  Transfer balance\
+1.  Register a new user
+2.  Login
+3.  View total balance
+4.  Transfer balance
 5.  Check transaction history
 
 ---
 
 ## Important Notes
 
-- Backend must be running before starting the app.\
-- CORS must be enabled on the backend for web support.\
-- Code generation is required (Freezed & Envied).\
-- Only `.env.example` is committed to Git.\
+- Backend must be running before starting the app.
+- CORS must be enabled on the backend for web support.
+- Code generation is required (Freezed & Envied).
+- Only `.env.example` is committed to Git.
 - Recommended platform for assessment: **Flutter Web (Chrome)**.
 
 ---
 
 ## Requirements
 
-- Flutter SDK (3.38.8 or latest stable recommended)\
-- Google Chrome\
+- Flutter SDK (3.38.8 or latest stable recommended)
+- Google Chrome
 - Running Backend API
